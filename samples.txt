@@ -1,0 +1,10 @@
+Cs1	Cs1_rep1
+Cs1	Cs1_rep2
+Cs2	Cs2_rep1
+Cs2	Cs2_rep2
+Cs3	Cs3_rep1
+Cs3	Cs3_rep2
+Cs4	Cs4_rep1
+Cs4	Cs4_rep2
+Cs5	Cs5_rep1
+Cs5	Cs5_rep2

@@ -1,0 +1,13 @@
+# config.yaml
+samples_file: "samples.txt"
+genome: "ref/genome.fa"
+gtf: "ref/genes.gtf"
+libtype: "RF"
+
+TRINITY_HOME: "/home/zhxd2/.conda/envs/RNASnake/opt/trinity-2.1.1/"
+contrasts_file: "contrasts.txt"
+DE_method: "DESeq2"
+
+protein: "ref/longest_protein.fa"
+eggnog_db: "/pub/database/eggnog-mapper-data"
+emapper_mode: "mmseqs"

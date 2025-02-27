@@ -1,0 +1,10 @@
+quanti/Cs1_rep1.count
+quanti/Cs1_rep2.count
+quanti/Cs2_rep1.count
+quanti/Cs2_rep2.count
+quanti/Cs3_rep1.count
+quanti/Cs3_rep2.count
+quanti/Cs4_rep1.count
+quanti/Cs4_rep2.count
+quanti/Cs5_rep1.count
+quanti/Cs5_rep2.count

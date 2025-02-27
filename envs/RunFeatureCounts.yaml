@@ -1,0 +1,9 @@
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - r-argparser=0.7.1
+  - bioconductor-rsubread=2.14.2
+  - bioconductor-deseq2=1.40.2
+  - bioconductor-edger=3.42.4
+  - bioconductor-limma=3.56.2

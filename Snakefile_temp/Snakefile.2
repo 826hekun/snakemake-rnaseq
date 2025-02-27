@@ -1,0 +1,38 @@
+rule all:
+  input:
+    "clean_data/Cs1_rep1_1.fastp.fastq.gz", 
+    "clean_data/Cs1_rep1_2.fastp.fastq.gz", 
+    "clean_data/Cs2_rep1_1.fastp.fastq.gz", 
+    "clean_data/Cs2_rep1_2.fastp.fastq.gz", 
+    "clean_data/Cs3_rep1_1.fastp.fastq.gz", 
+    "clean_data/Cs3_rep1_2.fastp.fastq.gz", 
+    "clean_data/Cs4_rep1_1.fastp.fastq.gz", 
+    "clean_data/Cs4_rep1_2.fastp.fastq.gz", 
+    "clean_data/Cs5_rep1_1.fastp.fastq.gz", 
+    "clean_data/Cs5_rep1_2.fastp.fastq.gz",
+    "clean_data/Cs1_rep2_1.fastp.fastq.gz", 
+    "clean_data/Cs1_rep2_2.fastp.fastq.gz", 
+    "clean_data/Cs2_rep2_1.fastp.fastq.gz", 
+    "clean_data/Cs2_rep2_2.fastp.fastq.gz", 
+    "clean_data/Cs3_rep2_1.fastp.fastq.gz", 
+    "clean_data/Cs3_rep2_2.fastp.fastq.gz", 
+    "clean_data/Cs4_rep2_1.fastp.fastq.gz", 
+    "clean_data/Cs4_rep2_2.fastp.fastq.gz", 
+    "clean_data/Cs5_rep2_1.fastp.fastq.gz", 
+    "clean_data/Cs5_rep2_2.fastp.fastq.gz"
+
+rule trim_fastq:
+  input:
+    r1="raw_data/{sample}_1.fastq.gz",
+    r2="raw_data/{sample}_2.fastq.gz"
+  output:
+    r1="clean_data/{sample}_1.fastp.fastq.gz",
+    r2="clean_data/{sample}_2.fastp.fastq.gz",
+    report="clean_data/{sample}.fastp.html",
+    json="clean_data/{sample}.fastp.json"
+  shell:
+    """
+      fastp -i {input.r1} -I {input.r2} \
+        -o {output.r1} -O {output.r2} \
+        -h {output.report} -j {output.json}
+    """

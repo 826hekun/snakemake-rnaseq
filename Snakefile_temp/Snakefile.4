@@ -1,0 +1,59 @@
+SAMPLES = ["Cs1_rep1", "Cs1_rep2", "Cs2_rep1", "Cs2_rep2", "Cs3_rep1", "Cs3_rep2", "Cs4_rep1", "Cs4_rep2", "Cs5_rep1", "Cs5_rep2"]
+
+rule all:
+  input:
+    expand("aligned/{sample}.bam", sample=SAMPLES)
+
+rule trim_fastq:
+  input:
+    r1="raw_data/{sample}_1.fastq.gz",
+    r2="raw_data/{sample}_2.fastq.gz"
+  output:
+    r1="clean_data/{sample}_1.fastp.fastq.gz",
+    r2="clean_data/{sample}_2.fastp.fastq.gz",
+    report="clean_data/{sample}.fastp.html",
+    json="clean_data/{sample}.fastp.json"
+  shell:
+    """
+      fastp -i {input.r1} -I {input.r2} \
+        -o {output.r1} -O {output.r2} \
+        -h {output.report} -j {output.json}
+    """
+
+rule build_hisat2_index:
+  input:
+    genome="ref/genome.fa"
+  output:
+    idx=expand("genome.hisat2.{idx}.ht2", idx=range(1, 9))
+  shell:
+    """
+      hisat2-build {input.genome} genome.hisat2
+    """
+
+rule align_hisat2:
+  input:
+    r1="clean_data/{sample}_1.fastp.fastq.gz",
+    r2="clean_data/{sample}_2.fastp.fastq.gz",
+    idx=expand("genome.hisat2.{idx}.ht2", idx=range(1, 9))
+  output:
+    sam="aligned/{sample}.sam",
+    log="aligned/{sample}.hisat2.log"
+  shell:
+    """
+      hisat2 -x genome.hisat2 -1 {input.r1} -2 {input.r2} \
+        --new-summary --rna-strandness RF \
+        -S {output.sam} \
+        1> {output.log} 2>&1 
+    """
+
+rule samtools_sort_idx:
+  input:
+    sam="aligned/{sample}.sam"
+  output:
+    bam="aligned/{sample}.bam",
+    idx="aligned/{sample}.bam.bai"
+  shell:
+    """
+      samtools sort -o {output.bam} {input.sam}
+      samtools index {output.bam}
+    """

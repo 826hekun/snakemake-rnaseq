@@ -1,0 +1,21 @@
+rule all:
+  input:
+    "clean_data/Cs1_rep1_1.fastp.fastq.gz",
+    "clean_data/Cs1_rep1_2.fastp.fastq.gz"
+
+# 使用 fastp 处理数据
+rule trim_fastq:
+  input:
+    r1="raw_data/Cs1_rep1_1.fastq.gz",
+    r2="raw_data/Cs1_rep1_2.fastq.gz"
+  output:
+    r1="clean_data/Cs1_rep1_1.fastp.fastq.gz",
+    r2="clean_data/Cs1_rep1_2.fastp.fastq.gz",
+    report="clean_data/Cs1_rep1.fastp.html",
+    json="clean_data/Cs1_rep1.fastp.json"
+  shell:
+    """
+      fastp -i {input.r1} -I {input.r2} \
+        -o {output.r1} -O {output.r2} \
+        -h {output.report} -j {output.json}
+    """
